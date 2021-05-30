@@ -1,0 +1,27 @@
+interval=5
+
+[volume]
+command=pactl list sinks | grep -m1 "Volume" | awk '{printf "L: %s R: %s\n", $5, $12}'
+interval=1
+
+
+[time]
+command=date +"%d/%m/%y %T"
+interval=1
+
+[kb_layout]
+command=~/.config/i3blocks/keyboard.sh
+interval=1
+
+[brightness]
+command=echo "SCR $(($(cat /sys/class/backlight/amdgpu_bl0/brightness | head -n 1) * 100 / 255))%"
+interval=1
+
+# TODO: red if under 15 %
+[battery]
+command=echo $(acpi -b | grep -v "rate information unavailable" | awk '{if ($3 == "Charging,") printf "CHR %d%%", $4; else printf "BAT %d%%", $4;}')
+
+[power_off]
+full_text=
+command=if test $BLOCK_BUTTON -eq 1; then i3-nagbar -t warning -m "Do you want to shutdown?" -B "Yes" "shutdown now" ; elif test $BLOCK_BUTTON -eq 2; then i3-nagbar -t warning -m "Do you want to reboot?" -B "yes" "reboot"; fi > /dev/null 2>&1
+
