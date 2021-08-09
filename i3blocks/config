@@ -1,27 +1,53 @@
+# i3blocks configuration file
+#
+# The i3blocks man page describes the usage of the binary,
+# and its website describes the configuration:
+#
+#     https://vivien.github.io/i3blocks
+
+
+# Global properties
+separator=true
+separator_block_width=15
+
+[media_backward]
+separator=false
+separator_block_width=8
+command=./music_backward.sh
+interval=1
+
+[media]
+separator=false
+separator_block_width=8
+command=./media_info.sh
+interval=1
+align=center
+markup=pango
+
+[media_forward]
+command=./music_forward.sh
+interval=1
+
+[memory]
+command=./memory.sh
 interval=5
 
-[volume]
-command=pactl list sinks | grep -m1 "Volume" | awk '{printf "L: %s R: %s\n", $5, $12}'
-interval=1
-
-
 [time]
-command=date +"%d/%m/%y %T"
+command=date '+%Y/%m/%d %H:%M'
 interval=1
 
-[kb_layout]
-command=~/.config/i3blocks/keyboard.sh
-interval=1
-
-[brightness]
-command=echo "SCR $(($(cat /sys/class/backlight/amdgpu_bl0/brightness | head -n 1) * 100 / 255))%"
-interval=1
-
-# TODO: red if under 15 %
 [battery]
-command=echo $(acpi -b | grep -v "rate information unavailable" | awk '{if ($3 == "Charging,") printf "CHR %d%%", $4; else printf "BAT %d%%", $4;}')
+command=./my_battery.sh
+interval=1
+align=center
+markup=pango
 
-[power_off]
-full_text=
-command=if test $BLOCK_BUTTON -eq 1; then i3-nagbar -t warning -m "Do you want to shutdown?" -B "Yes" "shutdown now" ; elif test $BLOCK_BUTTON -eq 2; then i3-nagbar -t warning -m "Do you want to reboot?" -B "yes" "reboot"; fi > /dev/null 2>&1
+[lock]
+separator=false
+separator_block_width=5
+full_text=""
+command=i3-msg -q exec i3exit lock
 
+[power-off]
+full_text=""
+command=i3-msg -q exec "i3-nagbar -t warning -m 'Do you want to power off?' -b 'Power off' 'i3-msg -q exec shutdown now'"

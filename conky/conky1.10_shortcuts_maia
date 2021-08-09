@@ -1,0 +1,21 @@
+conky.config = {
+	alignment = 'top_right',
+	background = true,
+	default_color = '000000',
+	double_buffer = true,
+    draw_border = true,
+	font = 'Bitstream Vera Sans:size=30',
+	draw_shades = false,
+	gap_x = 5,
+	gap_y = 45,
+	minimum_width = 200,
+	no_buffers = true,
+	own_window = true,
+	own_window_type = 'override',
+	own_window_transparent = true,
+	update_interval = 1.0,
+	use_xft = true,
+}
+conky.text = [[
+${time %H:%M:%S}
+]]
