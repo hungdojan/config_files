@@ -56,11 +56,26 @@ interval=1
 align=center
 markup=pango
 
-[lock]
+# [lock]
+# separator=false
+# separator_block_width=5
+# full_text=""
+# command=i3-msg -q exec i3exit lock
+
+[sleep_mode]
 separator=false
 separator_block_width=5
-full_text=""
-command=i3-msg -q exec i3exit lock
+command=./inactivity.sh
+interval=1
+align=center
+markup=pango
+
+[mic_info]
+separator=false
+separator_block_width=5
+command=./mic_info.sh
+interval=1
+align=center
 
 [power-off]
 full_text=""
