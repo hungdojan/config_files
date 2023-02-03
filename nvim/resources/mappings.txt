@@ -1,0 +1,21 @@
+  Keybind  |        action
+-----------------------------
+        NERD TREE
+    F8     |  opens nerd tree  
+    F9     |  toggles nerd tree
+
+        MAKE COMMAND
+  <C-F5>   |  builds C project with make command
+    F5     |  builds and runs C project with make command
+ <C-S-F11> |  jumps to previous C compile error
+ <C-S-F12> |  jumps to next C compile error
+ <C-S-F10> |  opens C quickfix list 
+
+        SPELLING
+    F12    |  toggles English spell check
+  <C-F12>  |  toggles Czech spell check
+
+        OTHERS
+ <C-S-F1>  |  toggles between light and dark themes (onehalf)
+  <C-F1>   |  opens this help page
+

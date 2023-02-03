@@ -1,0 +1,45 @@
+{
+    "suggest.completionItemKindLabels": {
+        "class": "ﴯ",
+        "color": "",
+        "constant": "",
+        "constructor": "",
+        "enum": "",
+        "enumMember": "",
+        "event": "",
+        "field": "ﰠ",
+        "file": "",
+        "folder": "",
+        "function": "",
+        "interface": "",
+        "keyword": "",
+        "method": "",
+        "module": "",
+        "operator": "",
+        "property": "ﰠ",
+        "reference": "",
+        "snippet": "",
+        "struct": "פּ",
+        "text": "",
+        "typeParameter": "",
+        "unit": "塞",
+        "value": "",
+        "variable": ""
+    },
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
+            "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                }
+            }
+        },
+        "pyright": {
+            "command": "python",
+            "filetypes": ["python"]
+        }
+    }
+}
