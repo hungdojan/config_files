@@ -1,3 +1,5 @@
+local nvim_tree_setup = require "nvim_tree_setup"
+
 return require('packer').startup(function()
     -- global plugins
     use 'wbthomason/packer.nvim'
@@ -5,7 +7,8 @@ return require('packer').startup(function()
 
     -- colorscheme
     use 'dracula/vim'
-    use "ellisonleao/gruvbox.nvim"
+    -- use "ellisonleao/gruvbox.nvim"
+    use 'morhetz/gruvbox'
 
     -- neoscroll
     use 'karb94/neoscroll.nvim'
@@ -19,26 +22,8 @@ return require('packer').startup(function()
     use 'kyazdani42/nvim-web-devicons'
     use 'kyazdani42/nvim-tree.lua'
     require'nvim-tree'.setup({
-        view = { 
-            mappings = {
-                list = {
-                    { key = "<2-LeftMouse>", action = "tabnew" }
-                }
-            }
-        }
+        on_attach = nvim_tree_setup.on_attach,
     })
-    vim.api.nvim_set_keymap(
-        "n",
-        "<F4>",
-        ":NvimTreeFocus<CR>",
-        { noremap = true}
-    )
-    vim.api.nvim_set_keymap(
-        "n",
-        "<F5>",
-        ":NvimTreeToggle<CR>",
-        { noremap = true}
-    )
 
     use 'williamboman/mason.nvim'
     require('mason').setup()
@@ -62,4 +47,6 @@ return require('packer').startup(function()
 
     -- editorconfig
     use 'gpanders/editorconfig.nvim'
+
+    use { 'catppuccin/nvim', as = 'catppuccin' }
 end)

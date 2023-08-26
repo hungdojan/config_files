@@ -24,16 +24,13 @@ end
 
 -- toggle between light mode and dark mode
 function colorscheme_toggle()
-    if (vim.g.colors_name == "onehalfdark") then
-        vim.cmd([[
-            colorscheme onehalflight
-            AirlineTheme onehalflight
-        ]])
-    else
-        vim.cmd([[
-            colorscheme onehalfdark
-            AirlineTheme onehalfdark
-        ]])
+    vim.o.background = vim.o.background == 'dark'
+                       and 'light'
+                       or 'dark'
+
+    if (theme:find('onehalf', 1, true) == 1) then
+        vim.cmd.colorscheme('onehalf' .. vim.o.background)
+        vim.g.airline_theme = 'onehalf' .. vim.o.background
     end
 end
 
@@ -68,8 +65,8 @@ nmap('<F48>', ':cn<CR>')            -- <C-S-F12>
 nmap('<F46>', ':cwindow<CR>')       -- <C-S-F10>
 nmap('<F12>', ':set spell! spelllang=en<CR>')    -- <F12>
 nmap('<F36>', ':set spell! spelllang=cs<CR>')    -- <C-F12>
-nmap('<F37>', ':lua colorscheme_toggle()<CR>')   -- <C-S-F1>
-nmap('<F25>', ':lua custom_mappings()<CR>')      -- <C-F1>
+nmap('<F38>', ':lua colorscheme_toggle()<CR>')   -- <C-S-F2>
+nmap('<F26>', ':lua custom_mappings()<CR>')      -- <C-F2>
 
 -- edit functions
 nmap('Y', 'yy')

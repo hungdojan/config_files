@@ -16,6 +16,6 @@
   <C-F12>  |  toggles Czech spell check
 
         OTHERS
- <C-S-F1>  |  toggles between light and dark themes (onehalf)
-  <C-F1>   |  opens this help page
+ <C-S-F2>  |  toggles between light and dark themes
+  <C-F2>   |  opens this help page
 

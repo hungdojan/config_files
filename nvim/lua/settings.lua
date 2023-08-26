@@ -27,7 +27,7 @@ vim.opt.showbreak= '↪' -- character to show when line is broken
 
 -- sidebar
 vim.opt.number = true
-vim.opt.relativenumber = true
+-- vim.opt.relativenumber = true
 vim.opt.numberwidth = 3
 vim.opt.showcmd = true
 
@@ -60,12 +60,22 @@ vim.opt.backup = true
 vim.opt.directory = HOME .. '/.vim/tmp/swap'
 vim.opt.backupdir = HOME .. '/.vim/tmp/backup'
 vim.opt.wildmenu = true
-vim.opt.spellsuggest=best,9
 vim.opt.cursorline = true
 vim.g.load_doxygen_syntax=1
 
 vim.cmd([[
     set t_Co=256
     set cc=80
-    colorscheme onehalfdark
+    set spellsuggest=best,9
 ]])
+
+-- themes
+theme = 'catppuccin'
+-- theme = 'onehalf' .. vim.o.background
+-- theme = 'gruvbox'
+
+vim.cmd.colorscheme(theme)
+
+if theme == 'catppuccin' then
+    vim.g.airline_theme = 'catppuccin'
+end

@@ -9,6 +9,19 @@ lspconfig.ccls.setup {
   filetype = { 'cc', 'cpp' }
 }
 lspconfig.pyright.setup {
-    -- on_attach = require'completion'.on_attach,
-    filetype = { 'py' }
+  -- on_attach = require'completion'.on_attach,
+  filetype = { 'py' }
 }
+--lspconfig.ltex.setup{
+--  on_attach = on_attach,
+--  cmd = { "ltex-ls" },
+--  filetypes = { "markdown", "text", "latex", "tex" },
+--  flags = { debounce_text_changes = 300 },
+--  settings = {
+--    ltex = {
+--      directory = {
+--        ["en-US"] = {"GoodUSB", "BadUSB"},
+--      };
+--    },
+--  },
+-- }

@@ -74,6 +74,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  catppuccin = {
+    loaded = true,
+    path = "/home/rebulien/.local/share/nvim/site/pack/packer/start/catppuccin",
+    url = "https://github.com/catppuccin/nvim"
+  },
   ["coc.nvim"] = {
     loaded = true,
     path = "/home/rebulien/.local/share/nvim/site/pack/packer/start/coc.nvim",
@@ -94,10 +99,15 @@ _G.packer_plugins = {
     path = "/home/rebulien/.local/share/nvim/site/pack/packer/start/deoplete.nvim",
     url = "https://github.com/Shougo/deoplete.nvim"
   },
-  ["gruvbox.nvim"] = {
+  ["editorconfig.nvim"] = {
     loaded = true,
-    path = "/home/rebulien/.local/share/nvim/site/pack/packer/start/gruvbox.nvim",
-    url = "https://github.com/ellisonleao/gruvbox.nvim"
+    path = "/home/rebulien/.local/share/nvim/site/pack/packer/start/editorconfig.nvim",
+    url = "https://github.com/gpanders/editorconfig.nvim"
+  },
+  gruvbox = {
+    loaded = true,
+    path = "/home/rebulien/.local/share/nvim/site/pack/packer/start/gruvbox",
+    url = "https://github.com/morhetz/gruvbox"
   },
   ["mason.nvim"] = {
     loaded = true,
@@ -149,10 +159,20 @@ _G.packer_plugins = {
     path = "/home/rebulien/.local/share/nvim/site/pack/packer/start/vim-airline-themes",
     url = "https://github.com/vim-airline/vim-airline-themes"
   },
+  ["vim-gitgutter"] = {
+    loaded = true,
+    path = "/home/rebulien/.local/share/nvim/site/pack/packer/start/vim-gitgutter",
+    url = "https://github.com/airblade/vim-gitgutter"
+  },
   ["vim-lsp"] = {
     loaded = true,
     path = "/home/rebulien/.local/share/nvim/site/pack/packer/start/vim-lsp",
     url = "https://github.com/prabirshrestha/vim-lsp"
+  },
+  vimtex = {
+    loaded = true,
+    path = "/home/rebulien/.local/share/nvim/site/pack/packer/start/vimtex",
+    url = "https://github.com/lervag/vimtex"
   }
 }
 
