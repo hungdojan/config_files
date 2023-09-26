@@ -69,7 +69,7 @@ vim.cmd([[
     set spellsuggest=best,9
 ]])
 
--- themes
+-- themes 
 theme = 'catppuccin'
 -- theme = 'onehalf' .. vim.o.background
 -- theme = 'gruvbox'
@@ -79,3 +79,16 @@ vim.cmd.colorscheme(theme)
 if theme == 'catppuccin' then
     vim.g.airline_theme = 'catppuccin'
 end
+
+-- python formatting
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'python',
+    command = 'set equalprg=black\\ -q\\ -'
+})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'python',
+    command = 'set formatprg=black\\ -q\\ 2>/dev/null\\ --stdin-filename\\ \\%\\ -'
+})
+
+-- vim.g.airline_powerline_fonts = 0
+-- TODO: update airline symbols

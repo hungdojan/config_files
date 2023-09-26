@@ -1,5 +1,3 @@
-local nvim_tree_setup = require "nvim_tree_setup"
-
 return require('packer').startup(function()
     -- global plugins
     use 'wbthomason/packer.nvim'
@@ -12,7 +10,6 @@ return require('packer').startup(function()
 
     -- neoscroll
     use 'karb94/neoscroll.nvim'
-    require'neoscroll'.setup()
 
     -- airline
     use 'vim-airline/vim-airline' -- powerline
@@ -21,19 +18,11 @@ return require('packer').startup(function()
     -- nvim-tree
     use 'kyazdani42/nvim-web-devicons'
     use 'kyazdani42/nvim-tree.lua'
-    require'nvim-tree'.setup({
-        on_attach = nvim_tree_setup.on_attach,
-    })
 
     use 'williamboman/mason.nvim'
-    require('mason').setup()
 
     -- ccls lsp
-    use 'prabirshrestha/vim-lsp'
-    use 'Shougo/deoplete.nvim'
-    use 'lighttiger2505/deoplete-vim-lsp'
-    -- use 'deoplete-plugins/deoplete-clang'
-    use 'nvim-lua/completion-nvim'
+    -- use 'nvim-lua/completion-nvim'
     use { 'neoclide/coc.nvim', branch = 'release' }
 
     -- use 'onsails/lspkind.nvim'
@@ -49,4 +38,6 @@ return require('packer').startup(function()
     use 'gpanders/editorconfig.nvim'
 
     use { 'catppuccin/nvim', as = 'catppuccin' }
+
+    use 'windwp/nvim-autopairs'
 end)

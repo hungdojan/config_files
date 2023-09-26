@@ -1,0 +1,287 @@
+#!/usr/bin/env bash
+
+# settings
+CPP_PROJECT=false
+NAME=${PWD##*/}
+TEST_ENABLE=false
+FILE_NAME=""
+
+usage() {
+    echo -e "while getopts "hCtn:" opts; do
+    case "$opts" in
+        C)
+            CPP_PROJECT=true
+            ;;
+        n)
+            NAME=$OPTARG
+            ;;
+        t)
+            TEST_ENABLE=true
+            ;;
+        h|*)
+            usage
+            exit 0
+            ;;
+    esac
+done"
+}
+
+generate_test() {
+    if [[ -d ./tests ]]; then
+        echo "Test directory already exists"
+        exit 1
+    fi
+    git submodule init
+    git submodule add https://github.com/google/googletest tests/gtest
+    git submodule update
+    cat > tests/test.cpp <<EOF
+#include <gtest/gtest.h>
+
+class TestClass : public ::testing::Test {
+protected:
+    virtual void SetUp() {};
+    virtual void TearDown() {};
+}
+
+TEST_F(TestClass, FirstTest) {
+}
+EOF
+    cat > tests/CMakeLists.txt <<EOF
+add_subdirectory(gtest)
+add_executable(tests test.cpp)
+target_link_libraries(tests PRIVATE gtest gtest_main)
+EOF
+    if [[ $1 = true ]]; then
+        cat << EOF >> CMakeLists.txt
+add_subdirectory(tests)
+EOF
+        echo -e "
+test: \$(DEBUG_BIN_DIR)/tests
+\t\$<" >> Makefile
+    else
+        sed -i "/.PHONY/ s/$/ test/g" Makefile
+        echo -e "
+test: ./tests/Build/tests
+\t./$<
+
+./tests/Build/tests: ./tests/Build/Makefile
+\tmake -C'tests/Build' -j8
+
+./tests/Build/Makefile: ./tests/CMakeLists.txt ./tests/*.cpp
+\tcmake -Htests -B'tests/Build' -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
+\tif [[ ! -f ./tests/compile_commands.json]]; then ln -s ./tests/Build/compile_commands.json ./tests; fi" >> Makefile
+    fi
+}
+
+generate_project() {
+    echo "Initializing project"
+    echo "Initializing git repo"
+    git init > /dev/null
+    cat > .gitignore <<- EOM
+*.o
+.zip
+.ccls
+doc/
+EOM
+    echo "Generating Doxyfile"
+    doxygen -g > /dev/null
+    touch README.md
+
+    echo "Generating editorconfig"
+    cat > .editorconfig <<- EOM
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+[*.{c,cpp,h,hpp}]
+charset = utf-8
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+[Makefile]
+indent_style = tab
+tab_width = 4
+EOM
+
+    if [[ $1 = true ]]; then
+        generate_cpp_project $2 $3
+    else
+        generate_c_project $2 $3
+    fi
+}
+
+generate_c_project() {
+    echo "Generating Makefile"
+    echo -e "# C project: $1
+CC=gcc
+CFLAGS=-std=c99 -Wall -Wextra -pedantic
+# CFLAGS+=-O2 # Release
+CFLAGS+=-g  # Debug
+TARGET=$1
+OBJS=\$(patsubst %.c,%.o,\$(wildcard ./src/*.c))
+
+#####################################
+
+.PHONY: all run doc pack valgrind debug
+
+all: \$(TARGET)
+
+run: \$(TARGET)
+\t./$<
+
+doc: Doxyfile
+\tdoxygen
+
+\$(TARGET): \$(OBJS)
+\t\$(CC) \$(CFLAGS) -o \$@ \$^
+
+clean:
+\trm -f \$(OBJS) \$(TARGET)
+
+valgrind: \$(TARGET)
+\tvalgrind --leak-check=full --track-origins=yes ./\$<
+
+debug: \$(TARGET)
+\tgdb -tui ./\$<
+
+pack:
+\trm -f $1.zip
+\tzip $1 Makefile *.c *.h
+" > Makefile
+
+    echo -e "gcc
+-std=c11
+-Wall
+-Wextra
+-pedantic
+-Iinclude
+-Wformat-overflow
+" > .ccls
+
+    mkdir include src
+    createCfiles main
+    if [[ $2 = true ]]; then
+        generate_test false
+    fi
+}
+
+generate_cpp_project() {
+    mkdir src src/include
+    echo "Generating Makefile"
+    echo -e "# CPP project: $!
+TARGET_NAME=$1
+BUILD_DIR=./Build
+
+DEBUG_DIR=\$(BUILD_DIR)/Debug
+DEBUG_BIN_DIR=\$(DEBUG_DIR)/bin
+DEBUG_EXEC=\$(DEBUG_BIN_DIR)/\$(TARGET_NAME)
+
+RELEASE_DIR=\$(BUILD_DIR)/Release
+RELEASE_BIN_DIR=\$(RELEASE_DIR)/bin
+RELEASE_EXEC=\$(RELEASE_BIN_DIR)/\$(TARGET_NAME)
+
+##############################################
+
+.PHONY: build build_release run run_release doc pack clean update_commands
+
+build: \$(DEBUG_EXEC)
+
+run: \$(DEBUG_EXEC)
+	\$<
+
+build_release: \$(RELEASE_EXEC)
+
+run_release: \$(RELEASE_EXEC)
+	\$<
+
+doc: Doxygen
+	doxygen
+
+pack: src/* README.md Makefile CMakeLists.txt Doxygen
+	rm -f *.zip
+	zip -r \$(TARGET_NAME) \$^
+
+clean:
+	rm -rf doc *.zip \$(BUILD_DIR)
+
+##############################################
+
+\$(DEBUG_EXEC): \$(DEBUG_DIR)/Makefile
+	make -C\$(DEBUG_DIR) -j8
+
+\$(DEBUG_DIR)/Makefile: CMakeLists.txt ./src/*
+	cmake -H. -B\$(DEBUG_DIR) -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
+	if [[ ! -f ./compile_commands.json ]]; then ln -s \$(DEBUG_DIR)/compile_commands.json .; fi
+
+\$(RELEASE_EXEC): \$(RELEASE_DIR)/Makefile
+	make -C\$(RELEASE_DIR) -j8
+
+\$(RELEASE_DIR)/Makefile: CMakeLists.txt ./src/*
+	cmake -H. -B\$(RELEASE_DIR) -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
+	if [[ ! -f ./compile_commands.json ]]; then ln -s \$(RELEASE_DIR)/compile_commands.json .; fi" > Makefile
+    echo "Generating CMakeLists.txt"
+    cat > CMakeLists.txt <<EOM
+cmake_minimum_required(VERSION 3.15)
+project($1)
+
+set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY \${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY \${CMAKE_BINARY_DIR}/lib) # .so
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY \${CMAKE_BINARY_DIR}/lib) # .a
+
+add_subdirectory(src)
+EOM
+    cat > src/main.cpp <<EOF
+#include <iostream>
+
+int main() {
+    std::cout << "Hello world" << std::endl;
+    // here write your code
+    return 0;
+}
+
+/* main.cpp */
+EOF
+    cat > src/CMakeLists.txt <<EOF
+include_directories(include)
+
+file(GLOB HEADERS ./include/*.h)
+
+add_executable(\${PROJECT_NAME} main.cpp)
+EOF
+
+    if [[ $2 = true ]]; then
+        generate_test true
+    fi
+}
+
+while getopts "hCtn:" opts; do
+    case "$opts" in
+        C)
+            CPP_PROJECT=true
+            ;;
+        n)
+            NAME=$OPTARG
+            ;;
+        t)
+            TEST_ENABLE=true
+            ;;
+        h|*)
+            usage
+            exit 0
+            ;;
+    esac
+done
+
+if [[ ! -f "./Makefile" ]]; then
+    generate_project $CPP_PROJECT $NAME $TEST_ENABLE
+else
+    [ "$(head -n1 Makefile | sed -e "s/# \(\w\w*\) project: .*/\1/g")" = "CPP" ] && CPP_PROJECT=true || CPP_PROJECT=false
+fi
+if [[ $TEST_ENABLE = true ]]; then
+    generate_test $CPP_PROJECT
+fi

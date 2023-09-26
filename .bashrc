@@ -88,6 +88,10 @@ else
 	fi
 fi
 
+function cdls() {
+    builtin cd "$@" && ls
+}
+
 unset use_color safe_term match_lhs sh
 
 alias cp="cp -i"                          # confirm before overwriting something
@@ -99,6 +103,7 @@ alias l='ls'
 alias btc='bluetoothctl'
 alias discord='discord --no-sandbox'
 alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
+alias cd='cdls'
 
 xhost +local:root > /dev/null 2>&1
 

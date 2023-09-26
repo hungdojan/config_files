@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+create_header() {
+    echo "Creating $1 header file..."
+    FILE_PATH="$1.h"
+    if [[ -d "./include" ]]; then
+        FILE_PATH="include/$1.h"
+    fi
+    cat > "$FILE_PATH" <<EOF
+#ifndef _${1^^}_H_
+#define _${1^^}_H_
+
+// here write your header
+
+#endif // _${1^^}_H_
+EOF
+    echo "$1.h file was created"
+}
+
+create_source() {
+    echo "Creating $1 source file..."
+    FILE_PATH="$1.c"
+    if [[ -d "./src" ]]; then
+        FILE_PATH="src/$1.c"
+    fi
+    cat > "$FILE_PATH" <<EOF
+#include "$1.h"
+
+// here write your code
+
+/* $1.c */
+EOF
+    echo "$1.c file was created"
+}
+
+create_main() {
+    echo "Creating main.c file..."
+    FILE_PATH="main.c"
+    if [[ -d "./src" ]]; then
+        FILE_PATH="src/main.c"
+    fi
+    cat > "$FILE_PATH" <<EOF
+#include <stdio.h>
+
+int main() {
+    printf("Hello world!\\n");
+    // here write your code
+    return 0;
+}
+
+/* main.c */
+EOF
+    echo "main.c file was created"
+}
+
+add_to_project() {
+    if [[ -f "./Makefile" ]]; then
+        sed -i "/OBJS=/ s/$/ $1.o/g" ./Makefile
+    fi
+}
+
+if [[ $# < 1 ]]; then
+    echo "Error: name of the object needed"
+    exit 1
+fi
+
+for arg in $@
+do
+    if [[ "$arg" == "main" ]]; then
+        create_main
+    else
+        create_header "$arg"
+        create_source "$arg"
+    fi
+    # add_to_project "$arg"
+done
