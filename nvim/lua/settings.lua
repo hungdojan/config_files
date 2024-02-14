@@ -89,6 +89,10 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = 'python',
     command = 'set formatprg=black\\ -q\\ 2>/dev/null\\ --stdin-filename\\ \\%\\ -'
 })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'haskell',
+    command = 'set equalprg=hindent\\ --indent-size\\ 4\\ \\%'
+})
 
 -- vim.g.airline_powerline_fonts = 0
 -- TODO: update airline symbols

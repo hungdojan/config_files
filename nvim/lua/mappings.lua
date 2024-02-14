@@ -58,8 +58,8 @@ nmap('<F8>', ':NvimTreeFocus<CR>')
 nmap('<F9>', ':NvimTreeToggle<CR>')
 
 -- compilation with make
-nmap('<F29>', ':w<CR>:make<CR>')    -- <C-F5>
-nmap('<F5>',  ':w<CR>:make run<CR>')
+nmap('<F29>', ':w<CR>:!make -C.. --quiet<CR>')    -- <C-F5>
+nmap('<F5>',  ':w<CR>:make run -C.. --quiet<CR>')
 nmap('<F47>', ':cp<CR>')            -- <C-S-F11>
 nmap('<F48>', ':cn<CR>')            -- <C-S-F12>
 nmap('<F46>', ':cwindow<CR>')       -- <C-S-F10>

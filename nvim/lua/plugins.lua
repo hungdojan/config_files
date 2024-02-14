@@ -40,4 +40,6 @@ return require('packer').startup(function()
     use { 'catppuccin/nvim', as = 'catppuccin' }
 
     use 'windwp/nvim-autopairs'
+
+    use 'nvim-treesitter/nvim-treesitter'
 end)
