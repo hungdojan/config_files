@@ -9,8 +9,8 @@ cmp.setup({
     end,
   },
   window = {
-    -- completion = cmp.config.window.bordered(),
-    -- documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -59,7 +59,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -------------------------------------------------
 -- LSP setups
 local lspconfig = require('lspconfig')
--- lspconfig.inlay_hint.enable(0, not lsp.inlay_hint.is_enabled())
+-- lsp.inlay_hint.enable(0, not lsp.inlay_hint.is_enabled())
 
 lspconfig.ccls.setup {
     init_options = {
@@ -83,6 +83,9 @@ lspconfig.pyright.setup {
 lspconfig.hls.setup {
     filetype = {'haskell', 'lhaskell', 'cabal'},
     capabilities = capabilities
+}
+
+lspconfig.rust_analyzer.setup {
 }
 
 -------------------------------------------------

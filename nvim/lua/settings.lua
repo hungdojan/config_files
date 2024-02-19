@@ -24,7 +24,6 @@ vim.opt.wrap = true --do not wrap lines even if very long
 vim.opt.eol = false -- show if there's no eol char
 vim.opt.showbreak= '↪' -- character to show when line is broken
 
-
 -- sidebar
 vim.opt.number = true
 -- vim.opt.relativenumber = true
@@ -92,6 +91,15 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd('FileType', {
     pattern = 'haskell',
     command = 'set equalprg=hindent\\ --indent-size\\ 4\\ \\%'
+})
+
+-- show diagnostics windows
+vim.api.nvim_create_autocmd({ "CursorHold" }, {
+    callback = function()
+        if vim.lsp.buf.server_ready() then
+            vim.diagnostic.open_float()
+        end
+    end,
 })
 
 -- vim.g.airline_powerline_fonts = 0
