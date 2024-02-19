@@ -1,7 +1,17 @@
 return require('packer').startup(function()
     -- global plugins
     use 'wbthomason/packer.nvim'
-    use 'neovim/nvim-lspconfig'
+    use {'neovim/nvim-lspconfig', opts={inlay_hints = {enabled = true}}}
+
+    -- autocompletion
+    use('hrsh7th/cmp-nvim-lsp')
+    use("hrsh7th/nvim-cmp") -- completion plugin
+    use("hrsh7th/cmp-buffer") -- source for text in buffer
+    use("hrsh7th/cmp-path") -- source for file system paths
+    use('hrsh7th/cmp-cmdline')
+
+    -- snippets
+    use("L3MON4D3/LuaSnip") -- snippet engine
 
     -- colorscheme
     use 'dracula/vim'
@@ -14,7 +24,7 @@ return require('packer').startup(function()
     -- airline
     use 'vim-airline/vim-airline' -- powerline
     use 'vim-airline/vim-airline-themes'
-    
+
     -- nvim-tree
     use 'kyazdani42/nvim-web-devicons'
     use 'kyazdani42/nvim-tree.lua'
@@ -22,8 +32,6 @@ return require('packer').startup(function()
     use 'williamboman/mason.nvim'
 
     -- ccls lsp
-    -- use 'nvim-lua/completion-nvim'
-    use { 'neoclide/coc.nvim', branch = 'release' }
 
     -- use 'onsails/lspkind.nvim'
     use { 'sonph/onehalf', rtp = 'vim/' }

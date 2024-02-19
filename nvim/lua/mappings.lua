@@ -38,22 +38,6 @@ function custom_mappings()
     vim.cmd('split|view $HOME/.config/nvim/resources/mappings.txt')
 end
 
--- Make <CR> to accept selected completion item or notify coc.nvim to format
--- <C-g>u breaks current undo, please make your own choice.
-vim.cmd([[
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-]])
-
---[[ 
-   Use tab for trigger completion with characters ahead and navigate.
-   NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-   other plugin before putting this into your config.
-  ]]
-imap_expr('<TAB>', 'coc#pum#visible() ? coc#pum#next(1) : "<Tab>"')
-imap_expr('<S-TAB>', 'coc#pum#visible() ? coc#pum#prev(1) : "<C-h>"')
-imap_expr('<C-space>', 'coc#refresh()')
-
 nmap('<F8>', ':NvimTreeFocus<CR>')
 nmap('<F9>', ':NvimTreeToggle<CR>')
 
