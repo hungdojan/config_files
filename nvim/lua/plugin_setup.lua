@@ -76,7 +76,6 @@ lspconfig.ccls.setup {
 }
 
 lspconfig.pyright.setup {
-    filetype = { 'py' },
     capabilities = capabilities
 }
 
@@ -91,7 +90,6 @@ lspconfig.rust_analyzer.setup {
 -------------------------------------------------
 local nvim_tree_setup = require "nvim_tree_setup"
 
-require('mason').setup()
 require('neoscroll').setup()
 
 require('nvim-autopairs').setup({
@@ -107,3 +105,5 @@ require('nvim-treesitter.configs').setup({
         enable = true
     }
 })
+
+require('fidget_setup')
