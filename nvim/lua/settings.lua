@@ -96,9 +96,7 @@ vim.api.nvim_create_autocmd('FileType', {
 -- show diagnostics windows
 vim.api.nvim_create_autocmd({ "CursorHold" }, {
     callback = function()
-        if vim.lsp.buf.server_ready() then
-            vim.diagnostic.open_float()
-        end
+        vim.diagnostic.open_float()
     end,
 })
 

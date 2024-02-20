@@ -10,6 +10,7 @@ return require('packer').startup(function()
     use 'hrsh7th/cmp-path' -- source for file system paths
     use 'hrsh7th/cmp-cmdline'
     use 'j-hui/fidget.nvim'
+    use 'rcarriga/nvim-notify'
 
     -- snippets
     use 'L3MON4D3/LuaSnip' -- snippet engine
