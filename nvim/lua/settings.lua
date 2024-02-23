@@ -92,6 +92,10 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = 'haskell',
     command = 'set equalprg=hindent\\ --indent-size\\ 4\\ \\%'
 })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'markdown', 'tex', 'text'},
+    command = 'set tw=90'
+})
 
 -- show diagnostics windows
 vim.api.nvim_create_autocmd({ "CursorHold" }, {
