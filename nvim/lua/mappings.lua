@@ -44,9 +44,12 @@ nmap('<F9>', ':NvimTreeToggle<CR>')
 -- compilation with make
 nmap('<F29>', ':w<CR>:!make -C.. --quiet<CR>')    -- <C-F5>
 nmap('<F5>',  ':w<CR>:make run -C.. --quiet<CR>')
+nmap('<F30>', ':w<CR>:make --quiet<CR>')          -- <C-F6>
+nmap('<F6>',  ':w<CR>:make run --quiet<CR>')
 nmap('<F47>', ':cp<CR>')            -- <C-S-F11>
 nmap('<F48>', ':cn<CR>')            -- <C-S-F12>
 nmap('<F46>', ':cwindow<CR>')       -- <C-S-F10>
+
 nmap('<F12>', ':set spell! spelllang=en<CR>')    -- <F12>
 nmap('<F36>', ':set spell! spelllang=cs<CR>')    -- <C-F12>
 nmap('<F38>', ':lua colorscheme_toggle()<CR>')   -- <C-S-F2>

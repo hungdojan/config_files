@@ -5,8 +5,10 @@
     F9     |  toggles nerd tree
 
         MAKE COMMAND
-  <C-F5>   |  builds C project with make command
-    F5     |  builds and runs C project with make command
+  <C-F5>   |  builds C project (Makefile in parent dir)
+    F5     |  builds and runs C project (Makefile in parent dir)
+  <C-F6>   |  builds C project (Makefile in current dir)
+    F6     |  builds and runs C project (Makefile in currnet dir)
  <C-S-F11> |  jumps to previous C compile error
  <C-S-F12> |  jumps to next C compile error
  <C-S-F10> |  opens C quickfix list 
@@ -14,6 +16,13 @@
         SPELLING
     F12    |  toggles English spell check
   <C-F12>  |  toggles Czech spell check
+
+        NVIM CMP
+   <C-b>   |  Scroll up in the dialog window
+   <C-f>   |  Scroll down in the dialog window
+ <C-Space> |  Open autocomplete menu
+   <C-e>   |  Close dialog/autocomplete window
+
 
         OTHERS
  <C-S-F2>  |  toggles between light and dark themes
