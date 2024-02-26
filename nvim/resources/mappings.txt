@@ -23,8 +23,8 @@
  <C-Space> |  Open autocomplete menu
    <C-e>   |  Close dialog/autocomplete window
 
-
         OTHERS
  <C-S-F2>  |  toggles between light and dark themes
   <C-F2>   |  opens this help page
+  <C-\>    |  Format document
 

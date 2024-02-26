@@ -14,6 +14,10 @@ function imap(shortcut, command)
     map('i', shortcut, command)
 end
 
+function vmap(shortcut, command)
+    map('v', shortcut, command)
+end
+
 function imap_expr(shortcut, command)
     vim.api.nvim_set_keymap('i', shortcut, command,
     {
@@ -54,6 +58,9 @@ nmap('<F12>', ':set spell! spelllang=en<CR>')    -- <F12>
 nmap('<F36>', ':set spell! spelllang=cs<CR>')    -- <C-F12>
 nmap('<F38>', ':lua colorscheme_toggle()<CR>')   -- <C-S-F2>
 nmap('<F26>', ':lua custom_mappings()<CR>')      -- <C-F2>
+nmap('<C-\\>', ':lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>')
+vmap('<C-\\>', ':lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>')
+
 
 -- edit functions
 nmap('Y', 'yy')

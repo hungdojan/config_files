@@ -9,8 +9,25 @@ return require('packer').startup(function()
     use 'hrsh7th/cmp-buffer' -- source for text in buffer
     use 'hrsh7th/cmp-path' -- source for file system paths
     use 'hrsh7th/cmp-cmdline'
+
+    -- notification and progress bars
     use 'j-hui/fidget.nvim'
     use 'rcarriga/nvim-notify'
+
+    -- lsp signature dialog window
+    use 'ray-x/lsp_signature.nvim'
+
+    -- mason
+    use {
+        'williamboman/mason.nvim',
+        'williamboman/mason-lspconfig.nvim'
+    }
+
+    -- null-ls
+    use {
+        'jose-elias-alvarez/null-ls.nvim',
+        requires = { "nvim-lua/plenary.nvim" },
+    }
 
     -- snippets
     use 'L3MON4D3/LuaSnip' -- snippet engine

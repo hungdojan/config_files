@@ -1,5 +1,11 @@
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local on_attach = function(client, bufnr)
+    if client.server_capabilities.inlayHintProvider then
+        vim.lsp.buf.inlay_hint(bufnr, true)
+    end
+end
 -------------------------------------------------
 -- LSP setups
 local lspconfig = require('lspconfig')
@@ -17,20 +23,25 @@ lspconfig.ccls.setup {
         };
     },
     capabilities = capabilities,
+    on_attach = on_attach,
     single_file_support = true
 }
 
 lspconfig.pyright.setup {
-    capabilities = capabilities
+    capabilities = capabilities,
+    on_attach = on_attach,
 }
 
 lspconfig.hls.setup {
     filetype = {'haskell', 'lhaskell', 'cabal'},
-    capabilities = capabilities
+    capabilities = capabilities,
+    on_attach = on_attach,
 }
 
 lspconfig.rust_analyzer.setup {
+    on_attach = on_attach,
 }
 
 lspconfig.bashls.setup{
+    on_attach = on_attach,
 }
