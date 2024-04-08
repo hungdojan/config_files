@@ -11,37 +11,49 @@ end
 local lspconfig = require('lspconfig')
 -- lsp.inlay_hint.enable(0, not lsp.inlay_hint.is_enabled())
 
+-- requires `ccls`
 lspconfig.ccls.setup {
     init_options = {
         cache = {
             -- directory = ".ccls-cache";
-            directory = "/tmp/ccls";
-        };
+            directory = "/tmp/ccls",
+        },
         clang = {
-            extraArgs = {"-Wunused", "-Wunused-parameter"};
-            excludeArgs = {};
-        };
+            extraArgs = { "-Wunused", "-Wunused-parameter" },
+            excludeArgs = {},
+        },
     },
     capabilities = capabilities,
     on_attach = on_attach,
     single_file_support = true
 }
 
+-- requires `pyright`
 lspconfig.pyright.setup {
     capabilities = capabilities,
     on_attach = on_attach,
 }
 
+-- requires `haskell-language-server-wrapper`
+--          `stylish-haskell`
 lspconfig.hls.setup {
-    filetype = {'haskell', 'lhaskell', 'cabal'},
+    filetype = { 'haskell', 'lhaskell', 'cabal' },
     capabilities = capabilities,
     on_attach = on_attach,
 }
 
+-- requires `rust-analyzer`
 lspconfig.rust_analyzer.setup {
     on_attach = on_attach,
 }
 
-lspconfig.bashls.setup{
+-- requires `bash-language-server`
+--          `shellcheck`
+lspconfig.bashls.setup {
+    on_attach = on_attach,
+}
+
+-- requires `lua-language-server`
+lspconfig.lua_ls.setup {
     on_attach = on_attach,
 }

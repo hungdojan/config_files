@@ -5,9 +5,9 @@ return require('packer').startup(function()
 
     -- autocompletion
     use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/nvim-cmp' -- completion plugin
+    use 'hrsh7th/nvim-cmp'   -- completion plugin
     use 'hrsh7th/cmp-buffer' -- source for text in buffer
-    use 'hrsh7th/cmp-path' -- source for file system paths
+    use 'hrsh7th/cmp-path'   -- source for file system paths
     use 'hrsh7th/cmp-cmdline'
 
     -- notification and progress bars
@@ -41,8 +41,13 @@ return require('packer').startup(function()
     use 'karb94/neoscroll.nvim'
 
     -- airline
-    use 'vim-airline/vim-airline' -- powerline
-    use 'vim-airline/vim-airline-themes'
+    -- use 'vim-airline/vim-airline' -- powerline
+    -- use 'vim-airline/vim-airline-themes'
+
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    }
 
     -- nvim-tree
     use 'kyazdani42/nvim-web-devicons'
@@ -64,4 +69,6 @@ return require('packer').startup(function()
     use 'windwp/nvim-autopairs'
 
     use 'nvim-treesitter/nvim-treesitter'
+
+    use 'Vimjas/vim-python-pep8-indent'
 end)

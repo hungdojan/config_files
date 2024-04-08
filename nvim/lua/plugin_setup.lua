@@ -1,3 +1,6 @@
+require("mason").setup()
+require("mason-lspconfig").setup()
+
 -- import setups
 require("setups.nvim_cmp_setup")
 require("setups.lsp_setup")
@@ -16,7 +19,8 @@ require('nvim-tree').setup({
 require('neoscroll').setup()
 
 require('nvim-autopairs').setup({
-    map_cr = true
+    map_cr = true,
+    enable_check_bracket_line = false
 })
 
 require('nvim-treesitter.configs').setup({
@@ -25,5 +29,4 @@ require('nvim-treesitter.configs').setup({
     }
 })
 
-require("mason").setup()
-require("mason-lspconfig").setup()
+require('lualine').setup {}

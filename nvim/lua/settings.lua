@@ -8,7 +8,7 @@ vim.opt.completeopt = 'menuone,noselect,noinsert'
 vim.opt.history = 750
 vim.opt.termguicolors = true
 vim.opt.startofline = true
-vim.opt.hlsearch = false 
+vim.opt.hlsearch = false
 
 -- display
 vim.opt.showmatch = false -- show matching brackets
@@ -22,7 +22,7 @@ vim.opt.foldlevel = 4 -- limit folding to 4 levels
 vim.opt.foldmethod = 'syntax' -- use language syntax to generate folds
 vim.opt.wrap = true --do not wrap lines even if very long
 vim.opt.eol = false -- show if there's no eol char
-vim.opt.showbreak= '↪' -- character to show when line is broken
+vim.opt.showbreak = '↪' -- character to show when line is broken
 
 -- sidebar
 vim.opt.number = true
@@ -60,7 +60,7 @@ vim.opt.directory = HOME .. '/.vim/tmp/swap'
 vim.opt.backupdir = HOME .. '/.vim/tmp/backup'
 vim.opt.wildmenu = true
 vim.opt.cursorline = true
-vim.g.load_doxygen_syntax=1
+vim.g.load_doxygen_syntax = 1
 
 vim.cmd([[
     set t_Co=256
@@ -68,7 +68,7 @@ vim.cmd([[
     set spellsuggest=best,9
 ]])
 
--- themes 
+-- themes
 theme = 'catppuccin'
 -- theme = 'onehalf' .. vim.o.background
 -- theme = 'gruvbox'
@@ -79,22 +79,12 @@ if theme == 'catppuccin' then
     vim.g.airline_theme = 'catppuccin'
 end
 
--- python formatting
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'python',
-    command = 'set equalprg=black\\ -q\\ -'
+    pattern = 'haskell',
+    command = 'set sw=2 ts=2'
 })
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'python',
-    command = 'set formatprg=black\\ -q\\ 2>/dev/null\\ --stdin-filename\\ \\%\\ -'
-})
--- FIXME: breaks with nvim-autopairs
--- vim.api.nvim_create_autocmd('FileType', {
---     pattern = 'haskell',
---     command = 'set equalprg=hindent\\ --indent-size\\ 4\\ \\%'
--- })
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'markdown', 'tex', 'text'},
+    pattern = { 'markdown', 'tex', 'text' },
     command = 'set tw=90'
 })
 
@@ -104,6 +94,3 @@ vim.api.nvim_create_autocmd({ "CursorHold" }, {
         vim.diagnostic.open_float()
     end,
 })
-
--- vim.g.airline_powerline_fonts = 0
--- TODO: update airline symbols

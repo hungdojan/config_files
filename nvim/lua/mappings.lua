@@ -1,9 +1,9 @@
 function map(mode, shortcut, command)
     vim.api.nvim_set_keymap(mode, shortcut, command,
-    {
-        noremap = true,
-        silent = true,
-    })
+        {
+            noremap = true,
+            silent = true,
+        })
 end
 
 function nmap(shortcut, command)
@@ -20,17 +20,17 @@ end
 
 function imap_expr(shortcut, command)
     vim.api.nvim_set_keymap('i', shortcut, command,
-    {
-        silent = true,
-        expr = true
-    })
+        {
+            silent = true,
+            expr = true
+        })
 end
 
 -- toggle between light mode and dark mode
 function colorscheme_toggle()
     vim.o.background = vim.o.background == 'dark'
-                       and 'light'
-                       or 'dark'
+        and 'light'
+        or 'dark'
 
     if (theme:find('onehalf', 1, true) == 1) then
         vim.cmd.colorscheme('onehalf' .. vim.o.background)
@@ -46,18 +46,18 @@ nmap('<F8>', ':NvimTreeFocus<CR>')
 nmap('<F9>', ':NvimTreeToggle<CR>')
 
 -- compilation with make
-nmap('<F29>', ':w<CR>:!make -C.. --quiet<CR>')    -- <C-F5>
-nmap('<F5>',  ':w<CR>:make run -C.. --quiet<CR>')
-nmap('<F30>', ':w<CR>:make --quiet<CR>')          -- <C-F6>
-nmap('<F6>',  ':w<CR>:make run --quiet<CR>')
-nmap('<F47>', ':cp<CR>')            -- <C-S-F11>
-nmap('<F48>', ':cn<CR>')            -- <C-S-F12>
-nmap('<F46>', ':cwindow<CR>')       -- <C-S-F10>
+nmap('<F29>', ':w<CR>:!make -C.. --quiet<CR>') -- <C-F5>
+nmap('<F5>', ':w<CR>:make run -C.. --quiet<CR>')
+nmap('<F30>', ':w<CR>:make --quiet<CR>')       -- <C-F6>
+nmap('<F6>', ':w<CR>:make run --quiet<CR>')
+nmap('<F47>', ':cp<CR>')                       -- <C-S-F11>
+nmap('<F48>', ':cn<CR>')                       -- <C-S-F12>
+nmap('<F46>', ':cwindow<CR>')                  -- <C-S-F10>
 
-nmap('<F12>', ':set spell! spelllang=en<CR>')    -- <F12>
-nmap('<F36>', ':set spell! spelllang=cs<CR>')    -- <C-F12>
-nmap('<F38>', ':lua colorscheme_toggle()<CR>')   -- <C-S-F2>
-nmap('<F26>', ':lua custom_mappings()<CR>')      -- <C-F2>
+nmap('<F12>', ':set spell! spelllang=en<CR>')  -- <F12>
+nmap('<F36>', ':set spell! spelllang=cs<CR>')  -- <C-F12>
+nmap('<F38>', ':lua colorscheme_toggle()<CR>') -- <C-S-F2>
+nmap('<F26>', ':lua custom_mappings()<CR>')    -- <C-F2>
 nmap('<C-\\>', ':lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>')
 vmap('<C-\\>', ':lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>')
 
