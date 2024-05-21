@@ -80,7 +80,7 @@ if theme == 'catppuccin' then
 end
 
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'haskell',
+    pattern = {'haskell', 'javascript', 'typescript', 'javascriptreact'},
     command = 'set sw=2 ts=2'
 })
 vim.api.nvim_create_autocmd('FileType', {
