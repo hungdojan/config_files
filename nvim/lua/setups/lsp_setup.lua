@@ -3,13 +3,12 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local on_attach = function(client, bufnr)
     if client.server_capabilities.inlayHintProvider then
-        vim.lsp.buf.inlay_hint(bufnr, true)
+        vim.lsp.inlay_hint.enable(true)
     end
 end
 -------------------------------------------------
 -- LSP setups
 local lspconfig = require('lspconfig')
--- lsp.inlay_hint.enable(0, not lsp.inlay_hint.is_enabled())
 
 -- requires `ccls`
 lspconfig.ccls.setup {
@@ -19,7 +18,7 @@ lspconfig.ccls.setup {
             directory = "/tmp/ccls",
         },
         clang = {
-            extraArgs = { "-Wunused", "-Wunused-parameter" },
+            extraArgs = { "-Wunused", "-Wunused-parameter", "-Wall" },
             excludeArgs = {},
         },
     },
@@ -56,9 +55,57 @@ lspconfig.bashls.setup {
 -- requires `lua-language-server`
 lspconfig.lua_ls.setup {
     on_attach = on_attach,
+    settings = {
+        Lua = {
+            runtime = {
+                path = {
+                    '?.lua',
+                    '?/init.lua',
+                    vim.fn.expand '~/.luarocks/share/lua/5.4/?.lua',
+                    vim.fn.expand '~/.luarocks/share/lua/5.4/?/init.lua',
+                    '/usr/share/5.4/?.lua',
+                    '/usr/share/lua/5.4/?/init.lua'
+                }
+            },
+            workspace = {
+                library = {
+                    vim.fn.expand '~/.luarocks/share/lua/5.4',
+                    '/usr/share/lua/5.4'
+                }
+            },
+            diagnostics = {
+                globals = { 'vim' }
+            },
+            hint = { enable = true }
+        }
+    }
 }
 
 -- requires `typescript-language-server`
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
     on_attach = on_attach,
+    javascript = {
+        inlayHints = {
+            includeInlayEnumMemberValueHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayParameterNameHints = 'all',
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayVariableTypeHints = true,
+            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+        }
+    },
+    typescript = {
+        inlayHints = {
+            includeInlayEnumMemberValueHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayParameterNameHints = 'all',
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayVariableTypeHints = true,
+            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+        }
+    }
 }

@@ -18,6 +18,12 @@ function vmap(shortcut, command)
     map('v', shortcut, command)
 end
 
+function keyset(mode, shortcut, func)
+    vim.keymap.set(mode, shortcut, func, {
+        silent = true,
+    })
+end
+
 function imap_expr(shortcut, command)
     vim.api.nvim_set_keymap('i', shortcut, command,
         {
@@ -27,7 +33,7 @@ function imap_expr(shortcut, command)
 end
 
 -- toggle between light mode and dark mode
-function colorscheme_toggle()
+local function colorscheme_toggle()
     vim.o.background = vim.o.background == 'dark'
         and 'light'
         or 'dark'
@@ -38,7 +44,7 @@ function colorscheme_toggle()
     end
 end
 
-function custom_mappings()
+local function custom_mappings()
     vim.cmd('split|view $HOME/.config/nvim/resources/mappings.txt')
 end
 
@@ -56,13 +62,42 @@ nmap('<F46>', ':cwindow<CR>')                  -- <C-S-F10>
 
 nmap('<F12>', ':set spell! spelllang=en<CR>')  -- <F12>
 nmap('<F36>', ':set spell! spelllang=cs<CR>')  -- <C-F12>
-nmap('<F38>', ':lua colorscheme_toggle()<CR>') -- <C-S-F2>
-nmap('<F26>', ':lua custom_mappings()<CR>')    -- <C-F2>
-nmap('<C-\\>', ':lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>')
-vmap('<C-\\>', ':lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>')
-
+keyset('n', '<F38>', colorscheme_toggle)
+keyset('n', '<F26>', custom_mappings)    -- <C-F2>
+keyset({'v', 'n'}, '<C-\\>', function()
+    vim.lsp.buf.format({ timeout_ms = 2000 })
+end)
+nmap('<F35>', '<C-w>|<C-w>_') -- <C-F11>
+nmap('<F47>', '<C-w>=')       -- <C-S-F11>
+keyset('n', '\\e', function()
+    vim.diagnostic.goto_next({
+        severity = vim.diagnostic.severity.ERROR
+    })
+end)
+keyset('n', '\\E', function()
+    vim.diagnostic.goto_prev({
+        severity = vim.diagnostic.severity.ERROR
+    })
+end)
+keyset('n', '\\w', function()
+    vim.diagnostic.goto_next({
+        severity = vim.diagnostic.severity.WARN
+    })
+end)
+keyset('n', '\\W', function()
+    vim.diagnostic.goto_prev({
+        severity = vim.diagnostic.severity.WARN
+    })
+end)
 
 -- edit functions
 nmap('Y', 'yy')
 imap('<C-h>', '<C-W>')
 imap('<C-Del>', '<C-o>dw')
+
+local _telescope_builtin = require('telescope.builtin')
+-- keyset('n', '<leader>ff', _telescope_builtin.find_files)
+keyset('n', 'tf', _telescope_builtin.find_files)
+keyset('n', 'tg', _telescope_builtin.live_grep)
+keyset('n', 'tb', _telescope_builtin.buffers)
+keyset('n', 'th', _telescope_builtin.help_tags)

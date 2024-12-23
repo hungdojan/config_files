@@ -7,5 +7,6 @@ null_ls.setup({
         null_ls.builtins.formatting.stylish_haskell,
         null_ls.builtins.formatting.jq,
         null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.stylua
     }
 })

@@ -60,11 +60,11 @@ vim.opt.directory = HOME .. '/.vim/tmp/swap'
 vim.opt.backupdir = HOME .. '/.vim/tmp/backup'
 vim.opt.wildmenu = true
 vim.opt.cursorline = true
+vim.opt.colorcolumn = "90"
 vim.g.load_doxygen_syntax = 1
 
 vim.cmd([[
     set t_Co=256
-    set cc=80
     set spellsuggest=best,9
 ]])
 
@@ -80,11 +80,11 @@ if theme == 'catppuccin' then
 end
 
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'haskell', 'javascript', 'typescript', 'javascriptreact'},
+    pattern = { 'haskell', 'javascript', 'typescript', 'javascriptreact', 'cpp' },
     command = 'set sw=2 ts=2'
 })
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = { 'markdown', 'tex', 'text' },
+    pattern = { 'tex', 'text', 'rst' },
     command = 'set tw=90'
 })
 

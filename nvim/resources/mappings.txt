@@ -27,4 +27,11 @@
  <C-S-F2>  |  toggles between light and dark themes
   <C-F2>   |  opens this help page
   <C-\>    |  Format document
+ <C-F11>   |  Focus window
+ <C-S-F11> |  Spread windows
 
+       TELESCOPE
+    tf     | find a file
+    tg     | live grep
+    tb     | buffers
+    th     | help tags
