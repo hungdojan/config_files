@@ -1,10 +1,10 @@
 -- source: https://github.com/arnvald/viml-to-lua
-HOME = os.getenv('HOME')
+HOME = os.getenv("HOME")
 
 -- basic settings
 vim.opt.encoding = "utf-8"
 vim.opt.backspace = "indent,eol,start"
-vim.opt.completeopt = 'menuone,noselect,noinsert'
+vim.opt.completeopt = "menuone,noselect,noinsert"
 vim.opt.history = 750
 vim.opt.termguicolors = true
 vim.opt.startofline = true
@@ -19,10 +19,10 @@ vim.opt.laststatus = 2
 vim.opt.list = false
 vim.opt.foldenable = false
 vim.opt.foldlevel = 4 -- limit folding to 4 levels
-vim.opt.foldmethod = 'syntax' -- use language syntax to generate folds
+vim.opt.foldmethod = "syntax" -- use language syntax to generate folds
 vim.opt.wrap = true --do not wrap lines even if very long
 vim.opt.eol = false -- show if there's no eol char
-vim.opt.showbreak = '↪' -- character to show when line is broken
+vim.opt.showbreak = "↪" -- character to show when line is broken
 
 -- sidebar
 vim.opt.number = true
@@ -52,12 +52,12 @@ vim.opt.ttimeoutlen = 100
 vim.opt.updatetime = 1000
 
 -- other
-vim.opt.mouse = 'nvi'
-vim.opt.background = 'dark'
-vim.opt.belloff = all
+vim.opt.mouse = "nvi"
+vim.opt.background = "dark"
+vim.opt.belloff = "all"
 vim.opt.backup = true
-vim.opt.directory = HOME .. '/.vim/tmp/swap'
-vim.opt.backupdir = HOME .. '/.vim/tmp/backup'
+vim.opt.directory = HOME .. "/.vim/tmp/swap"
+vim.opt.backupdir = HOME .. "/.vim/tmp/backup"
 vim.opt.wildmenu = true
 vim.opt.cursorline = true
 vim.opt.colorcolumn = "90"
@@ -67,30 +67,3 @@ vim.cmd([[
     set t_Co=256
     set spellsuggest=best,9
 ]])
-
--- themes
-theme = 'catppuccin'
--- theme = 'onehalf' .. vim.o.background
--- theme = 'gruvbox'
-
-vim.cmd.colorscheme(theme)
-
-if theme == 'catppuccin' then
-    vim.g.airline_theme = 'catppuccin'
-end
-
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = { 'haskell', 'javascript', 'typescript', 'javascriptreact', 'cpp' },
-    command = 'set sw=2 ts=2'
-})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = { 'tex', 'text', 'rst' },
-    command = 'set tw=90'
-})
-
--- show diagnostics windows
-vim.api.nvim_create_autocmd({ "CursorHold" }, {
-    callback = function()
-        vim.diagnostic.open_float()
-    end,
-})
