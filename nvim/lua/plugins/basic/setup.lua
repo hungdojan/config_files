@@ -6,11 +6,15 @@ return function()
         enable_check_bracket_line = false,
     })
     require("lualine").setup()
-    require("nvim-tree").setup()
+    require("nvim-tree").setup({
+        view = {
+            signcolumn = "no",
+        },
+    })
     require("nvim-treesitter.configs").setup({
         highlight = {
-            enable = true
-        }
+            enable = true,
+        },
     })
     require("fidget").setup()
     require("telescope").setup()
