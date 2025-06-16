@@ -17,17 +17,28 @@ return function()
         },
     })
     require("fidget").setup()
-    require("telescope").setup()
+    require("telescope").setup({})
 
     -- keymapping
-    vim.keymap.set("n", "<F8>", ":NvimTreeFocus<CR>", {})
-    vim.keymap.set("n", "<F9>", ":NvimTreeToggle<CR>", {})
+    vim.keymap.set("n", "<F8>", ":NvimTreeFocus<CR>", { desc = "Open nvim-tree panel" })
+    vim.keymap.set("n", "<F9>", ":NvimTreeToggle<CR>", { desc = "Toggle nvim-tree panel" })
+
+    local whichKey = require("which-key")
+    whichKey.setup({
+        preset = "helix",
+        spec = {
+            { "<leader>t", group = "Telescope", mode = "n" },
+            { "<leader>m", group = "Make commands", mode = "n" },
+            { "<leader>s", group = "Spelling", mode = "n" },
+        },
+    })
 
     local _telescope_builtin = require("telescope.builtin")
-    vim.keymap.set("n", "tf", _telescope_builtin.find_files, {})
-    vim.keymap.set("n", "tg", _telescope_builtin.live_grep, {})
-    vim.keymap.set("n", "tb", _telescope_builtin.buffers, {})
-    vim.keymap.set("n", "th", _telescope_builtin.help_tags, {})
+    vim.keymap.set("n", "<leader>tf", _telescope_builtin.find_files, { desc = "Find File" })
+    vim.keymap.set("n", "<leader>tg", _telescope_builtin.live_grep, { desc = "Live Grep" })
+    vim.keymap.set("n", "<leader>tb", _telescope_builtin.buffers, { desc = "Buffers" })
+    vim.keymap.set("n", "<leader>tr", _telescope_builtin.lsp_references, { desc = "LSP References" })
+    vim.keymap.set("n", "<leader>th", _telescope_builtin.git_status, { desc = "Git Status" })
 
     -- other
     vim.notify = require("notify")

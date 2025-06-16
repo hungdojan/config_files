@@ -1,7 +1,4 @@
 return function()
-	require("which-key").setup({
-		preset = "helix",
-	})
 	require("ibl").setup({
 		indent = {
 			highlight = { "IblWhitespace" },
