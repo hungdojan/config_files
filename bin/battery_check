@@ -1,0 +1,25 @@
+#!/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+if ! pgrep "i3" > /dev/null 2>&1 ; then
+    exit 0
+fi
+if [ "$(xrandr -q | grep "DisplayPort" | cut -d ' ' -f2)" == "connected" ]; then
+    exit 0
+fi
+
+user=rebulien
+user_id=1000
+line=$(acpi -b | grep -v 'rate information unavailable')
+val=$(echo "$line" | cut -d ' ' -f4 | tr -d '%,\n' )
+stat=$(echo "$line" | cut -d ' ' -f3| tr -d ',\n' )
+echo "$val"
+
+if [[ $stat == *"Discharging"* ]]; then
+    if [[ $val -lt 20 && $val -gt 15 ]]; then
+        sudo -u $user DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$user_id/bus /usr/bin/notify-send --icon=clock -u normal -t $((10 * 1000)) "Battery status" "<span font='18px'>low battery: $val%</span>"
+    elif [[ $val -le 15 ]]; then
+        sudo -u $user DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$user_id/bus /usr/bin/notify-send -u critical "Battery status" "<span font='18px'>$(echo -e "super low battery: $val%\nFill the tank, QUICKLY!!!")</span>"
+    fi
+# elif [[ $val -ge 83 ]]; then
+# 	sudo -u $user DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$user_id/bus /usr/bin/notify-send --icon=clock -u normal -t $((10 * 1000)) "Battery is fully charged!"
+fi

@@ -1,0 +1,22 @@
+conky.config = {
+	alignment = 'bottom_right',
+	double_buffer = true,
+	-- font = 'Ubuntu Mono Regular:size=11',
+	draw_shades = false,
+	no_buffers = true,
+    background = false,
+    own_window = true,
+    own_window_class = 'Conky',
+    minimum_size = 1000,
+    minimum_width = 300,
+    minimum_height = 300,
+    own_window_type = 'override',
+    own_window_transparent = true,
+	update_interval = 960,
+	use_xft = true,
+    gap_x = 20,
+    gap_y = 20,
+    lua_load = "~/.config/conky/todolist/script.lua",
+    lua_draw_hook_post = "main"
+}
+conky.text = [[ ${voffset 300} ]]
