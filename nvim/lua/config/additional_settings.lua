@@ -29,6 +29,7 @@ vim.api.nvim_create_autocmd({ "CursorHold" }, {
 vim.filetype.add({
 	pattern = {
 		[".*Containerfile"] = "dockerfile",
+        [".*tcss"] = "css"
 	},
 })
 vim.tbl_islist = vim.islist

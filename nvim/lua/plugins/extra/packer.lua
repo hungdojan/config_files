@@ -1,6 +1,5 @@
 return function(use)
 	use("Vimjas/vim-python-pep8-indent")
-	use("folke/which-key.nvim")
 	use({
 		"kawre/leetcode.nvim",
 		run = ":TSUpdate html", -- if you have `nvim-treesitter` installed

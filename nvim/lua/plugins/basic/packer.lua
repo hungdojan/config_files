@@ -1,4 +1,5 @@
 return function(use)
+    use("folke/which-key.nvim")
     use("rcarriga/nvim-notify")
     use({
         "nvim-tree/nvim-tree.lua",
@@ -18,5 +19,4 @@ return function(use)
         tag = "0.1.8",
         requires = { { "nvim-lua/plenary.nvim" } },
     })
-
 end
