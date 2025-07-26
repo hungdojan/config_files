@@ -18,8 +18,8 @@ return function(use)
 		requires = { "MunifTanjim/nui.nvim" },
 	})
 	use("OXY2DEV/markview.nvim")
-	use({
-		"nvzone/typr",
-		requires = "nvzone/volt",
-	})
+	-- use({
+	-- 	"nvzone/typr",
+	-- 	requires = "nvzone/volt",
+	-- })
 end
