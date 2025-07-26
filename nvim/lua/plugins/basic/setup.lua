@@ -1,5 +1,7 @@
 return function()
-    require("gitsigns").setup()
+    require("gitsigns").setup({
+        current_line_blame = true
+    })
     require("neoscroll").setup()
     require("nvim-autopairs").setup({
         map_cr = true,
@@ -17,19 +19,35 @@ return function()
         },
     })
     require("fidget").setup()
-    require("telescope").setup({})
+    require("telescope").setup({
+        pickers = {
+            live_grep = { theme = "ivy" },
+            find_files = { theme = "ivy" },
+            git_status = { theme = "ivy" },
+            lsp_references = { theme = "ivy" }
+        }
+    })
 
     -- keymapping
     vim.keymap.set("n", "<F8>", ":NvimTreeFocus<CR>", { desc = "Open nvim-tree panel" })
     vim.keymap.set("n", "<F9>", ":NvimTreeToggle<CR>", { desc = "Toggle nvim-tree panel" })
+    local gitsigns = require("gitsigns")
+    vim.keymap.set("n", "<leader>Gb", gitsigns.blame, { desc = "Git Blame" })
+    vim.keymap.set("n", "<leader>GB", gitsigns.toggle_current_line_blame, { desc = "Toggle Git Blame Inline" })
+    vim.keymap.set("n", "<leader>Gd", gitsigns.diffthis, { desc = "Git Diff" })
+    vim.keymap.set("n", "<leader>GH", gitsigns.preview_hunk_inline, { desc = "Git Changes Inline" })
+    vim.keymap.set("n", "<leader>Gs", gitsigns.stage_hunk, { desc = "Git Stage/Unstage Hunk" })
+    vim.keymap.set("n", "<leader>GS", gitsigns.stage_buffer, { desc = "Git Stage Buffer" })
+
 
     local whichKey = require("which-key")
     whichKey.setup({
         preset = "helix",
         spec = {
-            { "<leader>t", group = "Telescope", mode = "n" },
+            { "<leader>t", group = "Telescope",     mode = "n" },
             { "<leader>m", group = "Make commands", mode = "n" },
-            { "<leader>s", group = "Spelling", mode = "n" },
+            { "<leader>s", group = "Spelling",      mode = "n" },
+            { "<leader>G", group = "Git Signs",     mode = "n" },
         },
     })
 
