@@ -9,8 +9,8 @@ return function(pluginOpts)
 		if pluginOpts.colorscheme then
 			require("plugins.colorscheme").packer(use)
 		end
-		if pluginOpts.lsp then
-			require("plugins.lsp").packer(use)
+		if pluginOpts.coding then
+			require("plugins.coding").packer(use)
 		end
 		if pluginOpts.extra then
 			require("plugins.extra").packer(use)

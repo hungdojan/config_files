@@ -26,7 +26,7 @@ vim.opt.showbreak = "↪" -- character to show when line is broken
 
 -- sidebar
 vim.opt.number = true
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 vim.opt.numberwidth = 3
 vim.opt.showcmd = true
 
@@ -62,6 +62,7 @@ vim.opt.wildmenu = true
 vim.opt.cursorline = true
 vim.opt.colorcolumn = "90"
 vim.g.load_doxygen_syntax = 1
+vim.g.mapleader = " "
 
 vim.cmd([[
     set t_Co=256

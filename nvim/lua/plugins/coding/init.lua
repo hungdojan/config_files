@@ -1,4 +1,4 @@
 return {
-    packer = require("plugins.lsp.packer"),
-    setup = require("plugins.lsp.setup")
+    packer = require("plugins.coding.packer"),
+    setup = require("plugins.coding.setup")
 }

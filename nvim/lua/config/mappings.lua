@@ -1,6 +1,3 @@
-vim.keymap.set("n", "<F8>", ":NvimTreeFocus<CR>", {})
-vim.keymap.set("n", "<F9>", ":NvimTreeToggle<CR>", {})
-
 -- compilation with make
 vim.keymap.set("n", "<leader>mm", "<cmd>!make --quiet<cr>", { desc = "`make` in current folder." })
 vim.keymap.set("n", "<leader>mM", "<cmd>!make -C.. --quiet<cr>", { desc = "`make` in parent folder." })
