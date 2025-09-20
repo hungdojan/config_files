@@ -5,8 +5,9 @@
 set $mod Mod1
 set $alt Mod1
 
-set $notify_volume_value notify-send "Volume" -h "int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | head -n1 | tr -s ' ' | cut -d' ' -f5 | tr -d '%')"
+set $notify_volume_value notify-send "Volume " -h "int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | head -n1 | tr -s ' ' | cut -d' ' -f5 | tr -d '%')"
 set $notify_volume_status notify-send "$(pactl get-sink-mute @DEFAULT_SINK@)"
+set $notify_brightness bash ~/.config/i3/brightness_notify.sh
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
 
@@ -36,7 +37,6 @@ bindsym $mod+Return exec terminator
 
 # kill focused window
 bindsym $mod+Shift+q kill
-# bindsym Ctrl+q kill
 
 # start program launcher
 # bindsym $mod+d exec --no-startup-id dmenu_recency
@@ -51,7 +51,9 @@ bindsym $mod+z exec --no-startup-id morc_menu
 # startup apps
 # exec --no-startup-id blueman-applet
 exec --no-startup-id redshift
+exec "setxkbmap -layout 'us,cz(qwerty)' -option 'grp:win_space_toggle'"
 exec --no-startup-id signal-desktop --start-in-tray
+exec --no-startup-id redshift-gtk
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
@@ -73,23 +75,17 @@ bindsym XF86AudioPrev exec playerctl previous
 ################################################################################################
 
 # Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10% && $notify_brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%- && $notify_brightness
 
 # Start Applications
-# bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-# bindsym $mod+F2 exec palemoon
-bindsym $mod+F3 exec pcmanfm
 # bindsym $mod+F3 exec ranger
-# bindsym $mod+Shift+F3 exec pcmanfm_pkexec
-bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill picom
-bindsym $mod+Ctrl+t exec --no-startup-id picom -b
+bindsym $mod+Ctrl+t exec --no-startup-id picom -b --config ~/.config/picom.conf
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 # bindsym Print exec --no-startup-id i3-scrot
 # bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 # bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
-bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 focus_follows_mouse no
@@ -165,11 +161,6 @@ bindsym $mod+Ctrl+Left workspace prev
 # to display names or symbols instead of plain workspace numbers you can use
 # something like: set $ws1 1:mail
 #                 set $ws2 2:
-# set $ws1 "1"
-# set $ws2 "2"
-# set $ws3 "3"
-# set $ws4 "4"
-# set $ws5 "5"
 set $ws1 1
 set $ws2 2
 set $ws3 3
@@ -220,35 +211,14 @@ bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 # assign [class="Skype"] $ws5
 
 # Open specific applications in floating mode
-for_window [title="alsamixer"] floating enable border pixel 1
-for_window [class="calamares"] floating enable border normal
-for_window [class="Clipgrab"] floating enable
 for_window [title="File Transfer*"] floating enable
-for_window [class="fpakman"] floating enable
 for_window [class="Galculator"] floating enable border pixel 1
 #for_window [class="GParted"] floating enable border normal
 for_window [class="Ripcord"] floating enable sticky enable border normal
-for_window [title="i3_help"] floating enable sticky enable border normal
 for_window [class="Lightdm-settings"] floating enable
-for_window [class="Lxappearance"] floating enable sticky enable border normal
-for_window [class="Manjaro-hello"] floating enable
-for_window [class="Manjaro Settings Manager"] floating enable border normal
-for_window [title="MuseScore: Play Panel"] floating enable
 for_window [class="Nitrogen"] floating enable sticky enable border normal
-for_window [class="Oblogout"] fullscreen enable
-for_window [class="octopi"] floating enable
-for_window [title="About Pale Moon"] floating enable
-for_window [class="Pamac-manager"] floating enable
 for_window [class="Pavucontrol"] floating enable
-for_window [class="qt5ct"] floating enable sticky enable border normal
-for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
-for_window [class="Simple-scan"] floating enable border normal
-for_window [class="(?i)System-config-printer.py"] floating enable border normal
-for_window [class="Skype"] floating enable border normal
-for_window [class="Timeset-gui"] floating enable border normal
-#for_window [class="(?i)virtualbox"] floating enable border normal
-for_window [class="Xfburn"] floating enable
-# for_window [title="Screenshot"] floating enable
+for_window [title="Network Connections"] floating enable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -263,21 +233,22 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # Set shut down, restart and locking features
-bindsym Mod4+0 mode "$mode_system"
-set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-
-    # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+bindsym Mod4+0 exec --no-startup-id ~/.config/i3blocks/scripts/powermenu
+# bindsym Mod4+0 mode "$mode_system"
+# set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+# mode "$mode_system" {
+#     bindsym l exec --no-startup-id i3exit lock, mode "default"
+#     bindsym s exec --no-startup-id i3exit suspend, mode "default"
+#     bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+#     bindsym e exec --no-startup-id i3exit logout, mode "default"
+#     bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+#     bindsym r exec --no-startup-id i3exit reboot, mode "default"
+#     bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+#
+#     # exit system mode: "Enter" or "Escape"
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+# }
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
@@ -305,121 +276,145 @@ mode "resize" {
 
 # Lock screen
 bindsym $mod+p exec --no-startup-id i3exit suspend
-#bindsym $mod+p exec --no-startup-id blurlock
-# bindsym $mod+p exec --no-startup-id i3lock -i ~/Pictures/Wallpaper/imageedit_2_5652092636.png
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
+exec --no-startup-id nitrogen --restore; sleep 1; picom -b --config ~/.config/picom.conf
 # exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
+# exec --no-startup-id pamac-tray
 # exec --no-startup-id clipit
-exec_always --no-startup-id sbxkb
-exec --no-startup-id start_conky_maia
-# exec --no-startup-id conky -c $HOME/.config/conky/todolist/conky_todolist
-# exec --no-startup-id start_conky_green
-# exec --no-startup-id xautolock -time 10 -locker blurlock
-exec_always --no-startup-id ff-theme-util
-exec_always --no-startup-id fix_xcursor
-exec_always --no-startup-id /home/rebulien/config_files/i3/init_script.sh
+exec_always --no-startup-id ~/.config/i3/init_script.sh
 
-# Color palette used for the terminal ( ~/.Xresources file )
-# Colors are gathered based on the documentation:
-# https://i3wm.org/docs/userguide.html#xresources
-# Change the variable name at the place you want to match the color
-# of your terminal like this:
-# [example]
-# If you want your bar to have the same background color as your
-# terminal background change the line 362 from:
-# background #14191D
-# to:
-# background $term_background
-# Same logic applied to everything else.
-set_from_resource $term_background background
-set_from_resource $term_foreground foreground
-set_from_resource $term_color0     color0
-set_from_resource $term_color1     color1
-set_from_resource $term_color2     color2
-set_from_resource $term_color3     color3
-set_from_resource $term_color4     color4
-set_from_resource $term_color5     color5
-set_from_resource $term_color6     color6
-set_from_resource $term_color7     color7
-set_from_resource $term_color8     color8
-set_from_resource $term_color9     color9
-set_from_resource $term_color10    color10
-set_from_resource $term_color11    color11
-set_from_resource $term_color12    color12
-set_from_resource $term_color13    color13
-set_from_resource $term_color14    color14
-set_from_resource $term_color15    color15
+# catppuccin theme
+set $rosewater #f4dbd6
+set $flamingo #f0c6c6
+set $pink #f5bde6
+set $mauve #c6a0f6
+set $red #ed8796
+set $maroon #ee99a0
+set $peach #f5a97f
+set $yellow #eed49f
+set $green #a6da95
+set $teal #8bd5ca
+set $sky #91d7e3
+set $sapphire #7dc4e4
+set $blue #8aadf4
+set $lavender #b7bdf8
+set $text #cad3f5
+set $subtext1 #b8c0e0
+set $subtext0 #a5adcb
+set $overlay2 #939ab7
+set $overlay1 #8087a2
+set $overlay0 #6e738d
+set $surface2 #5b6078
+set $surface1 #494d64
+set $surface0 #363a4f
+set $base #24273a
+set $mantle #1e2030
+set $crust #181926
+set $separator #454947
 
-# Start i3bar to display a workspace bar (plus the system information i3status if available)
+# target                 border bg      text    indicator  border
+client.focused           $blue  $blue   $mantle $blue $lavender
+client.focused_inactive  $base  $base   $text   $blue $overlay0
+client.unfocused         $base  $base   $text   $blue $overlay0
+client.urgent            $base  $base   $peach  $blue  $peach
+client.placeholder       $base  $base   $text   $blue  $overlay0
+client.background        $base
+
 bar {
 	i3bar_command i3bar
-	# status_command i3status
 	status_command i3blocks
 	position top
 
-## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 	tray_output primary
- 	tray_output DisplayPort-0
+    tray_output DisplayPort-0
 
-#	bindsym button4 nop
-#	bindsym button5 nop
 #   font xft:URWGothic-Book 11
 	strip_workspace_numbers yes
 
     colors {
-		# Whole color settings
-		background #3c3836
-		statusline #ebdbb2
-		separator  #666666
+        background         $base
+        statusline         $text
+        separator          $separator
 
-
-		focused_workspace  #458588 #458588 #ebdbb2
-		active_workspace   #83a598 #83a598 #ebdbb2
-		inactive_workspace #504945 #504945 #ebdbb2
-		urgent_workspace   #cc241d #cc241d #504945
-	}
-
-    # colors {
-    #     # background #222D31
-    #     background #11202F
-    #     statusline #F9FAF9
-    #     separator  #454947
-
-#   #                        border  backgr. text
-    #     focused_workspace  #F9FAF9 #16a085 #292F34
-    #     active_workspace   #595B5B #353836 #FDF6E3
-    #     inactive_workspace #595B5B #222D31 #EEE8D5
-    #     binding_mode       #16a085 #2C2C2C #F9FAF9
-    #     urgent_workspace   #16a085 #FDF6E3 #E5201D
-    # }
+        # target           border bg        text
+        focused_workspace  $base  $mauve    $crust
+        active_workspace   $base  $surface2 $text
+        inactive_workspace $base  $base     $text
+        urgent_workspace   $base  $red      $crust
+    }
 }
 
 # hide/unhide i3status bar
 bindsym $mod+m bar mode toggle
 
-# Theme colors
-# class                   border  backgr. text    indic.   child_border
-#  client.focused          #556064 #556064 #80FFF9 #FDF6E3
-#  client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
-#  client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
-#  client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
-#  client.placeholder      #000000 #0c0c0c #ffffff #000000
+# # Start i3bar to display a workspace bar (plus the system information i3status if available)
+# bar {
+# 	i3bar_command i3bar
+# 	# status_command i3status
+# 	status_command i3blocks
+# 	position top
 #
-#  client.background       #2B2C2B
-
-client.focused          #665c54 #665c54 #eddbb2 #2e9ef4   #665c54
-client.focused_inactive #282828 #5f676a #ffffff #484e50   #5f676a
-client.unfocused        #3c3836 #3c3836 #a89984 #292d2e   #222222
-client.urgent           #cc241d #cc241d #ebdbb2 #cc241d   #cc241d
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-
-client.background       #ffffff
+# ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+# 	tray_output primary
+#  	tray_output DisplayPort-0
+#
+# #	bindsym button4 nop
+# #	bindsym button5 nop
+# #   font xft:URWGothic-Book 11
+# 	strip_workspace_numbers yes
+#
+#     colors {
+# 		# Whole color settings
+# 		background #3c3836
+# 		statusline #ebdbb2
+# 		separator  #666666
+#
+#
+# 		focused_workspace  #458588 #458588 #ebdbb2
+# 		active_workspace   #83a598 #83a598 #ebdbb2
+# 		inactive_workspace #504945 #504945 #ebdbb2
+# 		urgent_workspace   #cc241d #cc241d #504945
+# 	}
+#
+#     # colors {
+#     #     # background #222D31
+#     #     background #11202F
+#     #     statusline #F9FAF9
+#     #     separator  #454947
+#
+# #   #                        border  backgr. text
+#     #     focused_workspace  #F9FAF9 #16a085 #292F34
+#     #     active_workspace   #595B5B #353836 #FDF6E3
+#     #     inactive_workspace #595B5B #222D31 #EEE8D5
+#     #     binding_mode       #16a085 #2C2C2C #F9FAF9
+#     #     urgent_workspace   #16a085 #FDF6E3 #E5201D
+#     # }
+# }
+#
+# # hide/unhide i3status bar
+# bindsym $mod+m bar mode toggle
+#
+# # Theme colors
+# # class                   border  backgr. text    indic.   child_border
+# #  client.focused          #556064 #556064 #80FFF9 #FDF6E3
+# #  client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
+# #  client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
+# #  client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
+# #  client.placeholder      #000000 #0c0c0c #ffffff #000000
+# #
+# #  client.background       #2B2C2B
+#
+# client.focused          #665c54 #665c54 #eddbb2 #2e9ef4   #665c54
+# client.focused_inactive #282828 #5f676a #ffffff #484e50   #5f676a
+# client.unfocused        #3c3836 #3c3836 #a89984 #292d2e   #222222
+# client.urgent           #cc241d #cc241d #ebdbb2 #cc241d   #cc241d
+# client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+#
+# client.background       #ffffff
 
 #############################
 ### settings for i3-gaps: ###
@@ -480,21 +475,21 @@ mode "$mode_gaps_outer" {
 
 # additional settings
 # screenshots
-bindsym Print exec gnome-screenshot -i
+bindsym Print exec xfce4-screenshooter
 bindsym Ctrl+Print exec maim | xclip -selection clipboard -t image/png -i
 bindsym Ctrl+Shift+Print exec maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
 
 bindsym Ctrl+Shift+Mod1+Left move container workspace prev
 bindsym Ctrl+Shift+Mod1+Right move container workspace next
 
-bindsym Ctrl+Shift+$mod+o exec opera
+bindsym Ctrl+Shift+$mod+o exec brave
 bindsym Ctrl+Shift+$mod+f exec firefox
 bindsym Ctrl+Shift+$mod+c exec caprine
 bindsym Ctrl+Shift+$mod+d exec "discord --no-sandbox"
-bindsym Ctrl+Shift+$mod+s exec signal-desktop
+bindsym Ctrl+Shift+$mod+s exec signal-desktop --use-tray-icon
 bindsym Ctrl+Shift+$mod+t exec thunderbird
 bindsym Ctrl+Shift+$mod+v exec clickup
-bindsym Ctrl+Shift+$mod+p exec --no-startup-id pcmanfm
+bindsym Ctrl+Shift+$mod+p exec --no-startup-id thunar
 bindsym Ctrl+Shift+$mod+w exec --no-startup-id write_stylus
 bindsym Mod4+j exec "sleep 1 && xset -display :0.0 dpms force off"
 bindsym Ctrl+Shift+$mod+l exec wihotspot

@@ -1,82 +1,135 @@
-# i3blocks configuration file
-#
-# The i3blocks man page describes the usage of the binary,
-# and its website describes the configuration:
-#
-#     https://vivien.github.io/i3blocks
+# i3blocks config file changed for EndeavourOS-i3 setup
 
+# source is available here:
+# https://raw.githubusercontent.com/endeavouros-team/endeavouros-i3wm-setup/main/etc/skel/.config/i3/i3blocks.conf
+# Maintainer: joekamprad [joekamprad //a_t// endeavouros.com]
+# Former Visual Designer: Florent Valetti [@FLVAL EndeavourOS]
+# created for i3wm setup on EndeavourOS
+# https://endeavouros.com
+
+# cheatsheet for icon fonts used on the block-bar:
+# https://fontawesome.com/v4.7/cheatsheet/
+
+# --> to update this run the following command:
+# wget --backups=1 https://raw.githubusercontent.com/endeavouros-team/endeavouros-i3wm-setup/main/etc/skel/.config/i3/i3blocks.conf -P ~/.config/i3blocks/
+
+# Please see man i3blocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocks
+
+
+# List of valid properties:
+#
+# align
+# color
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
 
 # Global properties
-separator=true
-separator_block_width=15
-
-[media_backward]
+#
+# The top properties below are applied to every block, but can be overridden.
 separator=false
-separator_block_width=5
-command=./music_backward.sh
-interval=1
+markup=pango
 
 [media]
-separator=false
 separator_block_width=5
-command=./media_info.sh
+command=~/.config/i3blocks/scripts/media_info.sh
 interval=1
 align=center
-markup=pango
+separator=true
 
-[media_forward]
-separator=false
-separator_block_width=5
-command=./music_forward.sh
-interval=1
+# [terminal]
+# full_text= 
+# color=#807dfe
+# command=i3-msg -q exec terminator
+#
+# [browser]
+# full_text= 
+# color=#ff7f81
+# command=i3-msg -q exec firefox
+#
+# [files]
+# full_text= 
+# color=#7f3fbf
+# command=i3-msg -q exec thunar ~/
 
-[media_shuffle]
-separator=false
-separator_block_width=5
-command=./music_random.sh
-interval=1
-markup=pango
+#[mail]
+#full_text= 
+#color=#dbcb75
+#command=i3-msg -q exec thunderbird
+#separator=true
 
-[media_loop]
-command=./music_loop.sh
-interval=1
-markup=pango
+# [cpu_usage]
+# label=
+# command=~/.config/i3blocks/scripts/cpu_usage
+# #min_width=CPU: 100.00%
+# interval=2
+
+[CPU-temperature]
+label=
+command=~/.config/i3blocks/scripts/temperature
+interval=30
 
 [memory]
-command=./memory.sh
+command=~/.config/i3blocks/old_scripts/memory.sh
 interval=5
+separator=true
+
+# [volume-pulseaudio]
+# command=~/.config/i3blocks/scripts/volume
+# instance=Master
+# interval=1
+
+[keyboard-layout]
+command=~/.config/i3blocks/scripts/keyboard-layout
+interval=2
+separator=true
+
+[tailscale-exit-node]
+command=~/.config/i3blocks/scripts/tailscale_exit_node.sh
+interval=10
+separator=true
+
+# power-profiles-daemon implementation:
+# needs package power-profiles-daemon installed and the service running see here:
+# https://wiki.archlinux.org/title/CPU_frequency_scaling#power-profiles-daemon
+
+#set power-profile
+
+#Show the current power-profile
+
+# [ppd_menu]
+# full_text=
+# command=~/.config/i3blocks/scripts/power-profiles
+# color=#407437
+
+[ppd-status]
+command=~/.config/i3blocks/scripts/ppd-status
+interval=2
+align=center
+min_width=" Performance"
+separator=true
+
+[battery]
+command=~/.config/i3blocks/scripts/my_battery.sh
+label=
+interval=10
+separator=true
 
 [time]
 command=date '+%Y/%m/%d %H:%M'
 interval=1
+separator=true
 
-[battery]
-command=./my_battery.sh
-interval=1
-align=center
-markup=pango
-
-# [lock]
-# separator=false
-# separator_block_width=5
-# full_text=""
-# command=i3-msg -q exec i3exit lock
-
-[sleep_mode]
-separator=false
-separator_block_width=5
-command=./inactivity.sh
-interval=1
-align=center
-markup=pango
-
-[mic_info]
-separator=false
-separator_block_width=5
-command=./mic_info.sh
-interval=1
-align=center
-
-[power-off]
-full_text=""
-command=i3-msg -q exec "i3-nagbar -t warning -m 'Do you want to power off?' -b 'Power off' 'i3-msg -q exec shutdown now'"
+[shutdown_menu]
+full_text=
+command=~/.config/i3blocks/scripts/powermenu

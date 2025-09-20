@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 line=$(acpi -b | grep -v 'rate information unavailable')
-val=$(echo $line | cut -d ' ' -f4 | tr -d '%,\n' )
-stat=$(echo $line | cut -d ' ' -f3| tr -d ',\n' )
+val=$(echo "$line" | sed -n 's/.*\s\(.*\)%.*/\1/p' )
+stat=$(echo "$line" | sed -n 's/.*: \(.*\),.*/\1/p' )
 battery_stat=""
 
-if [[ $stat == *"Discharging"* ]]; then
+if [[ $stat == *"Discharging"* || $stat == *"Not charging"* ]]; then
     if [[ $val -ge 70 ]]; then
         battery_stat=""
         val="<span foreground='green'>$val %</span>"
