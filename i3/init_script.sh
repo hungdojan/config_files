@@ -6,3 +6,4 @@ if [[ $SEC_DISP == "connected" ]]; then
     # .screenlayout/vertical.sh
     ~/.screenlayout/usti_setup.sh
 fi
+nitrogen --restore
