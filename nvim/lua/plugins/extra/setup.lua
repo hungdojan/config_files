@@ -21,7 +21,6 @@ return function()
             ["<Down>"] = { "n", "x" },
         },
     })
-    -- require("typr").setup()
 
     vim.keymap.set("n", "<leader>M", ":Markview toggle<cr>", { desc = "Toggle Markdown view" })
 end

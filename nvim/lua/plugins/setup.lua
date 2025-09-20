@@ -7,8 +7,8 @@ return function(pluginOpts)
     if pluginOpts.colorscheme then
         require("plugins.colorscheme").setup()
     end
-    if pluginOpts.lsp then
-        require("plugins.lsp").setup()
+    if pluginOpts.coding then
+        require("plugins.coding").setup()
     end
     if pluginOpts.extra then
         require("plugins.extra").setup()

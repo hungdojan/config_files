@@ -14,7 +14,7 @@ local function conformSetup()
         },
     })
 
-    vim.keymap.set({ "v", "n" }, "<C-\\>", function()
+    vim.keymap.set({ "v", "n" }, "<leader>f", function()
         require("conform").format({
             lsp_fallback = true,
             async = false,
@@ -22,6 +22,7 @@ local function conformSetup()
         })
     end, {
         silent = true,
+        desc = "Format document"
     })
 end
 return function()
@@ -29,11 +30,11 @@ return function()
     require("Comment").setup({
         toggler = {
             line = "g/",
-            block = "gb",
         },
     })
-    require("plugins.lsp.lspConfig")()
-    require("plugins.lsp.nvimCmp")()
+    require("plugins.coding.lspConfig")()
+    require("plugins.coding.nvimCmp")()
+    require("plugins.coding.dapConfig")()
     require("lsp_signature").setup()
     conformSetup()
 end

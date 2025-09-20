@@ -1,12 +1,12 @@
 --- Define a table type for plugin options
 ---@class PluginOpts
----@field basic bool        Enable basic plugins
----@field lsp   bool        Enable LSP support
----@field extra bool        Enable extra plugins
----@field colorscheme bool  Enable colorscheme
+---@field basic boolean        Enable basic plugins
+---@field coding boolean       Enable LSP support
+---@field extra boolean        Enable extra plugins
+---@field colorscheme boolean  Enable colorscheme
 pluginOpts = {
     basic = true,
-    lsp = true,
+    coding = true,
     extra = true,
     colorscheme = true
 }

@@ -13,13 +13,19 @@ return function(use)
         "hrsh7th/nvim-cmp",
         requires = {
             "hrsh7th/cmp-buffer", -- source for text in buffer
-            "hrsh7th/cmp-path", -- source for file system paths
+            "hrsh7th/cmp-path",   -- source for file system paths
             "hrsh7th/cmp-cmdline",
-            "L3MON4D3/LuaSnip", -- snippet engine
+            "L3MON4D3/LuaSnip",   -- snippet engine
             "rafamadriz/friendly-snippets",
             "hrsh7th/cmp-nvim-lsp",
             "saadparwaiz1/cmp_luasnip",
         },
     }) -- completion plugin
     use("ray-x/lsp_signature.nvim")
+    use({
+        "mfussenegger/nvim-dap",
+        requires = {
+            "rcarriga/nvim-dap-ui", "nvim-neotest/nvim-nio"
+        }
+    })
 end
