@@ -5,9 +5,9 @@ EXIT_NODE_ADDRESS="rpi-sandbox"
 
 if [ "$BLOCK_BUTTON" = "1" ]; then
     if [ "$STATUS" = "1" ]; then
-        tailscale set --exit-node=""
+        tailscale set --exit-node="" --accept-routes=false
     else
-        tailscale set --exit-node="$EXIT_NODE_ADDRESS"
+        tailscale set --exit-node="$EXIT_NODE_ADDRESS" --accept-routes=true
     fi
 fi
 
