@@ -2,10 +2,11 @@ local activeLsp = {
     "ccls",
     "pyright",
     "bashls",
-    "lua_ls", -- requires `lua-language-server`
-    "ts_ls",  -- requires `typescript-language-server`
+    -- "lua_ls", -- requires `lua-language-server`
+    -- "ts_ls",  -- requires `typescript-language-server`
     "gopls",
     "yamlls",
+    -- "texlab",
 }
 
 local function newLspConfig()
