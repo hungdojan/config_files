@@ -6,7 +6,8 @@ local activeLsp = {
     -- "ts_ls",  -- requires `typescript-language-server`
     "gopls",
     "yamlls",
-    -- "texlab",
+    "texlab",
+    "ltex"
 }
 
 local function newLspConfig()

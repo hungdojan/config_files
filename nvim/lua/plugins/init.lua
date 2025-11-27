@@ -6,9 +6,9 @@
 ---@field colorscheme boolean  Enable colorscheme
 pluginOpts = {
     basic = true,
-    coding = true,
-    extra = true,
-    colorscheme = true
+    coding = false,
+    extra = false,
+    colorscheme = false
 }
 
 require("plugins.packer")(pluginOpts)
