@@ -1,10 +1,12 @@
 local activeLsp = {
-    "ccls",
+    -- "ccls",
     "pyright",
     "bashls",
     -- "lua_ls", -- requires `lua-language-server`
     -- "ts_ls",  -- requires `typescript-language-server`
-    "gopls",
+    -- "gopls",
+    "ruff",
+    "terraformls",
     "yamlls",
     "texlab",
     "ltex"

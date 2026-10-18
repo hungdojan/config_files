@@ -6,7 +6,11 @@ vim.api.nvim_create_autocmd("FileType", {
 		"javascriptreact",
 		"cpp",
 	},
-	command = "set sw=2 ts=2",
+    callback = function()
+		vim.opt.shiftwidth = 2
+		vim.opt.tabstop = 2
+		vim.opt.softtabstop = 2
+    end,
 })
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "tex", "text", "rst" },

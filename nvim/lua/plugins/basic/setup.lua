@@ -25,6 +25,9 @@ local function whichKeySetup()
             { "<leader>s", group = "Spelling",      mode = "n" },
             { "<leader>g", group = "Git Signs",     mode = "n" },
             { "<leader>w", group = "Debugger",      mode = "n" },
+            { "<leader>c", group = "Claude",        mode = "n" },
+            { "<leader>p", group = "Plugins",        mode = "n" },
+            { "<leader>z", group = "Folds",          mode = "n" },
         },
     })
 end
@@ -37,6 +40,7 @@ local function nvimTreeSetup()
     })
     vim.keymap.set("n", "<F8>", ":NvimTreeFocus<CR>", { desc = "Open nvim-tree panel" })
     vim.keymap.set("n", "<F9>", ":NvimTreeToggle<CR>", { desc = "Toggle nvim-tree panel" })
+    vim.keymap.set("n", "<leader>o", ":NvimTreeFindFile<CR>", { desc = "Open in NvimTree"})
 end
 
 local function gitSignsSetup()
@@ -59,10 +63,12 @@ return function()
         enable_check_bracket_line = false,
     })
     require("lualine").setup()
-    require("nvim-treesitter.configs").setup({
-        highlight = {
-            enable = true,
-        },
+    require("nvim-treesitter").setup({})
+    -- parsers are installed per environment with :TSInstall <lang>
+    vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+            pcall(vim.treesitter.start, args.buf) -- highlighting; folds are handled by nvim-ufo
+        end,
     })
     require("fidget").setup()
     telescopeSetup()

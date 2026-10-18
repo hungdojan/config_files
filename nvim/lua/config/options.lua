@@ -9,6 +9,7 @@ vim.opt.history = 750
 vim.opt.termguicolors = true
 vim.opt.startofline = true
 vim.opt.hlsearch = false
+vim.opt.wrap = true
 
 -- display
 vim.opt.showmatch = false -- show matching brackets
@@ -17,9 +18,6 @@ vim.opt.synmaxcol = 200
 vim.opt.laststatus = 2
 
 vim.opt.list = false
-vim.opt.foldenable = false
-vim.opt.foldlevel = 4 -- limit folding to 4 levels
-vim.opt.foldmethod = "syntax" -- use language syntax to generate folds
 vim.opt.wrap = true --do not wrap lines even if very long
 vim.opt.eol = false -- show if there's no eol char
 vim.opt.showbreak = "↪" -- character to show when line is broken

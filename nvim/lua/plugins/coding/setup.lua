@@ -3,15 +3,20 @@ local function conformSetup()
         formatters_by_ft = {
             json = { "jq" },
             lua = { "stylua" },
-            python = { "isort", "black" },
+            python = { "ruff_format" },
             javascript = { "prettier" },
             typescript = { "prettier" },
+            terraform = { "terraform_fmt" },
         },
         formatters = {
             isort = {
                 profile = "black",
             },
         },
+        -- format_on_save = {
+        --     timeout_ms = 2000,
+        --     lsp_fallback = true,
+        -- },
     })
 
     vim.keymap.set({ "v", "n" }, "<leader>f", function()
@@ -29,6 +34,9 @@ return function()
     require("todo-comments").setup()
     require("Comment").setup({
         toggler = {
+            line = "g/",
+        },
+        opleader = {
             line = "g/",
         },
     })

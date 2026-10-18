@@ -13,4 +13,7 @@ return function(pluginOpts)
     if pluginOpts.extra then
         require("plugins.extra").setup()
     end
+    if pluginOpts.ai then
+        require("plugins.ai").setup()
+    end
 end

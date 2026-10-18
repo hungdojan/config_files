@@ -17,3 +17,8 @@ vim.keymap.set("n", "<F47>", "<C-w>=", {}) -- <C-S-F11>
 vim.keymap.set("n", "Y", "yy", {})
 vim.keymap.set("i", "<C-h>", "<C-W>", {})
 vim.keymap.set("i", "<C-Del>", "<C-o>dw", {})
+vim.keymap.set('i', '<up>', '<cmd>norm! gk<cr>', { silent = true })
+vim.keymap.set('i', '<down>', '<cmd>norm! gj<cr>', { silent = true })
+
+-- vim.pack
+vim.keymap.set('n', '<leader>pu', ':lua vim.pack.update(nil, { force = true })<cr>', { silent = true, desc = "Update plugins" })
