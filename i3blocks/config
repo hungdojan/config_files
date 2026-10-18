@@ -94,8 +94,8 @@ command=~/.config/i3blocks/scripts/keyboard-layout
 interval=2
 separator=true
 
-[tailscale-exit-node]
-command=~/.config/i3blocks/scripts/tailscale_exit_node.sh
+[tailscale-status]
+command=~/.config/i3blocks/scripts/tailscale_status.sh
 interval=10
 separator=true
 

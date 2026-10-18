@@ -98,7 +98,7 @@ insert_final_newline = true
 [*.{c,cpp,h,hpp}]
 charset = utf-8
 indent_style = space
-indent_size = 4
+indent_size = 2
 trim_trailing_whitespace = true
 
 [Makefile]
